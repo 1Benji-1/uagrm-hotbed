@@ -23,13 +23,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         sudo apt-get update
-        sudo apt-get install -y xvfb chromium-browser
+        sudo apt-get install -y xvfb
+        # Quitamos la instalación de Chromium porque usaremos el Chrome de fábrica
 
     - name: 4. Ejecutar el bot dentro de la pantalla fantasma
-      env: # Aquí GitHub inyecta tus secretos de forma segura
+      env:
         UAGRM_USER: ${{ secrets.UAGRM_USER }}
         UAGRM_PASS: ${{ secrets.UAGRM_PASS }}
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
       run: |
-        # El comando xvfb-run es el que crea el monitor imaginario antes de abrir Python
-        xvfb-run --auto-servernum python main.py
+        # Agregamos "-u" para que Python imprima los mensajes en vivo
+        xvfb-run --auto-servernum python -u main.py
