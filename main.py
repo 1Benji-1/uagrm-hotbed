@@ -9,6 +9,7 @@ from services.telegram_bot import send_message
 def main():
 
     page = ChromiumPage()
+    page.set.window.mini()
 
     # Inciar sesion y navegar hasta el maestro de oferta
     login_page(page, USER, PASSWORD, LINK_PAGE)
