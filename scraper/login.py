@@ -1,5 +1,6 @@
 import time
 import random
+from excepctions.login_excepctions import exception_button, exception_checkbox
 
 def login_page(page, user, password, link):
 
@@ -21,13 +22,29 @@ def login_page(page, user, password, link):
         if btn and btn.attr('disabled') is None:
             print("Botón habilitado ✅")
             break
-        
+        else:
+            ele = page.ele(' .cb-lb input')
+            print(ele)
+            time.sleep(10)
+            if ele:
+                exception_checkbox(page, ele)
+
         time.sleep(0.5)
 
     time.sleep(1)
 
     print("Haciendo click...")
     page.run_js("document.getElementById('btnIngresar').click()")
+
+    ele = page.ele('#lblMSSG')
+
+    if ele and ele.text.strip():
+        msg = ele.text.strip()
+        print(msg)
+        return exception_button(page, msg)
+
+    return "ok"
+        
 
 
 def navigation_page(page):
